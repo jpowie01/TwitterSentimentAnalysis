@@ -21,7 +21,17 @@ $ . venv/bin/activate
 (venv) $ python main.py
 ```
 
-### Example API calls
+## How to train the model?
+
+```bash
+$ cd ./trainin
+$ virtualenv -p python3.6 venv
+$ . venv/bin/activate
+(venv) $ pip install pandas keras tensorflow sklearn nltk
+(venv) $ NLTK_DATA=./nltk/ python train.py
+```
+
+## Example API calls
 
 Here you can find some example endpoints that we've prepared:
 
