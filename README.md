@@ -25,9 +25,11 @@ $ . venv/bin/activate
 
 Here you can find some example endpoints that we've prepared:
 
-#### Get Trendings for country
+#### Get Trendings for given country
 
-`GET` `http://127.0.0.1:5000/trending/UK`:
+**NOTE:** Only `UK` and `USA` are supported for now!
+
+`GET` -> `http://127.0.0.1:5000/trending/UK`
 
 ```json
 [
@@ -50,14 +52,13 @@ Here you can find some example endpoints that we've prepared:
     "name": "#JuveMilan",
     "query": "%23JuveMilan",
     "volume": 34641
-  },
-  ...
+  }
 ]
 ```
 
 #### Get Tweets with sentiment analysis
 
-`GET` `http://127.0.0.1:5000/tweets?query=hate&size=100`
+`GET` -> `http://127.0.0.1:5000/tweets?query=hate&size=100`
 
 ```json
 [
@@ -80,7 +81,6 @@ Here you can find some example endpoints that we've prepared:
   {
     "text": "RT @Y2SHAF: i hate it when i’m walking on the treadmill and the person next to me starts running like calm down madam",
     "sentiment": null
-  },
-  ...
+  }
 ]
 ```
