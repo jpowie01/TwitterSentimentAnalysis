@@ -3,9 +3,15 @@ Twitter Sentiment Analysis
 
 An example use of sentiment analysis applied to the latest Tweets for given query.
 
-## How to run the UI?
+## How to run web-app?
 
-**UNDER CONSTRUCTION**
+```bash
+$ cd ./web-app
+$ npm install
+$ npm run dev
+```
+
+Need more info about web-app project? Check out [general project info](/web-app/README.md).
 
 ## How to run the API?
 
