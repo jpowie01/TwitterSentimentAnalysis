@@ -24,10 +24,13 @@ $ . venv/bin/activate
 ## How to train the model?
 
 ```bash
-$ cd ./trainin
+$ cd ./training
 $ virtualenv -p python3.6 venv
 $ . venv/bin/activate
 (venv) $ pip install pandas keras tensorflow sklearn nltk
+(venv) $ cd ./dataset && wget http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
+(venv) $ unzip trainingandtestdata.zip
+(venv) $ cd ..
 (venv) $ NLTK_DATA=./nltk/ python train.py
 ```
 
