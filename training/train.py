@@ -6,6 +6,7 @@ import pandas as pd
 from keras import regularizers
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, LSTM
+from keras.callbacks import ModelCheckpoint
 from sklearn.model_selection import train_test_split
 
 from attention import AttentionLayer
@@ -40,9 +41,8 @@ print('Testing dataset', X_test.shape, 'x', Y_test.shape)
 # Do the "magic" ie. training!
 BATCH_SIZE = 100
 EPOCHS = 20
-model.fit(X_train, Y_train, validation_data=(X_validate, Y_validate),
-          epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=2)
-
-# Save the model, so that we will be able to use it in our application
 os.makedirs('./output', exist_ok=True)
-model.save('./output/sentiment_analysis_model.h5')
+model_checkpoint = ModelCheckpoint('./output/sentiment_analysis_weights.{epoch:02d}-{val_loss:.3f}.h5', verbose=1)
+model.fit(X_train, Y_train, validation_data=(X_validate, Y_validate),
+          epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=2,
+          callbacks=[model_checkpoint])
