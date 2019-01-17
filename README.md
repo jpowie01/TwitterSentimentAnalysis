@@ -31,7 +31,8 @@ $ . venv/bin/activate
 (venv) $ cd ./dataset && wget http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
 (venv) $ unzip trainingandtestdata.zip
 (venv) $ cd ..
-(venv) $ NLTK_DATA=./nltk/ python train.py
+(venv) $ NLTK_DATA=./nltk/ python prepare_dataset.py
+(venv) $ python train.py
 ```
 
 ## Example API calls
