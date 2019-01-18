@@ -7,21 +7,9 @@ An example use of sentiment analysis applied to the latest Tweets for given quer
 
 **UNDER CONSTRUCTION**
 
-## How to run the API?
-
-```bash
-$ cd ./api
-$ virtualenv -p python3.6 venv
-$ . venv/bin/activate
-(venv) $ pip install tweepy flask-restplus
-(venv) $ export CONSUMER_KEY={YOUR_CONSUMER_KEY}
-(venv) $ export CONSUMER_SECRET={YOUT_CONSUMER_SECRET}
-(venv) $ export ACCESS_TOKEN={YOUR_ACCESS_TOKEN}
-(venv) $ export ACCESS_TOKEN_SECRET={YOUR_ACCESS_TOKEN_SECRET}
-(venv) $ python main.py
-```
-
 ## How to train the model?
+
+To train your model, please follow below commands:
 
 ```bash
 $ cd ./training
@@ -31,8 +19,35 @@ $ . venv/bin/activate
 (venv) $ cd ./dataset && wget http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
 (venv) $ unzip trainingandtestdata.zip
 (venv) $ cd ..
-(venv) $ NLTK_DATA=./nltk/ python prepare_dataset.py
+(venv) $ export NLTK_DATA=./nltk/
+(venv) $ python prepare_dataset.py
 (venv) $ python train.py
+```
+
+## How to run the API?
+
+At first copy your model from above training together with `tokenizer.pickle` to the `./api/model_data` directory.
+ Remember to change the name of you model to `weights.h5`! Folder should look like this:
+
+```
+$ ls ./api/model_data/
+-rw-r--r--  1 owner  owner   5.9K Jan 18 00:09 tokenizer.pickle
+-rw-r--r--  1 owner  owner    13M Jan 18 00:10 weights.h5
+```
+
+To run the API, use below series of commands:
+
+```bash
+$ cd ./api
+$ virtualenv -p python3.6 venv
+$ . venv/bin/activate
+(venv) $ pip install tweepy flask-restplus keras tensorflow nltk
+(venv) $ export CONSUMER_KEY={YOUR_CONSUMER_KEY}
+(venv) $ export CONSUMER_SECRET={YOUT_CONSUMER_SECRET}
+(venv) $ export ACCESS_TOKEN={YOUR_ACCESS_TOKEN}
+(venv) $ export ACCESS_TOKEN_SECRET={YOUR_ACCESS_TOKEN_SECRET}
+(venv) $ export NLTK_DATA=./nltk/
+(venv) $ python main.py
 ```
 
 ## Example API calls

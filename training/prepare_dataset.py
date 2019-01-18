@@ -1,18 +1,14 @@
-import re
-import string
+import pickle
 
-import nltk
 import numpy as np
 import pandas as pd
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.utils import shuffle
-from nltk.stem.porter import PorterStemmer
-from nltk.corpus import stopwords
 
-nltk.download('punkt', download_dir='./nltk/')
-nltk.download('stopwords', download_dir='./nltk/')
+from utils import clean_text
+
 
 # Read an annotate dataset with headers
 print('Reading dataset...')
@@ -25,25 +21,7 @@ print('Preprocessing...')
 dataset = shuffle(dataset)
 dataset = dataset[dataset['Sentiment'] != 2]
 dataset['Sentiment'] = dataset['Sentiment'] / 4
-
-# TODO: REFACTOR THIS METHOD FROM HERE
-stemmer = PorterStemmer()
-num = 0
-def clean_text(text):
-    text = text.lower().replace('rt', '')
-    text = "".join([ch for ch in text if ch not in string.punctuation])
-    text = ' '.join(re.sub(r"(@[A-Za-z0-9]+( tweeted:)?)|([^0-9A-Za-z \t])|(https?\S*)|(\w+:\/\/\S+)"
-                           , "", text).split())
-    tokens = nltk.word_tokenize(text)
-    tokens = [word for word in tokens if word not in stopwords.words('english')]
-
-    stems = [stemmer.stem(item) for item in tokens]
-    global num
-    num += 1
-    if num % 30000 == 0:
-        print(num)
-    return ' '.join(stems)
-# TODO: REFACTOR ENDS HERE
+dataset = dataset[:30]
 
 # Apply stemmer on all Tweets
 dataset['text'] = dataset['Text'].apply(clean_text)
@@ -51,9 +29,8 @@ dataset['text'] = dataset['Text'].apply(clean_text)
 # Tokenize all Tweets, so that it'll be easier to understand them
 MAX_FEATURES = 5000
 print('Tokenizing...')
-tokenizer = Tokenizer(num_words=MAX_FEATURES, split=' ')
+tokenizer = Tokenizer(num_words=MAX_FEATURES, split=' ', oov_token='UNK')
 tokenizer.fit_on_texts(dataset['Text'].values)
-
 
 # Prepare dataset for training our LSTM
 X = tokenizer.texts_to_sequences(dataset['Text'].values)
