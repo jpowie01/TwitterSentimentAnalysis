@@ -21,7 +21,6 @@ print('Preprocessing...')
 dataset = shuffle(dataset)
 dataset = dataset[dataset['Sentiment'] != 2]
 dataset['Sentiment'] = dataset['Sentiment'] / 4
-dataset = dataset[:30]
 
 # Apply stemmer on all Tweets
 dataset['text'] = dataset['Text'].apply(clean_text)
