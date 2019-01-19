@@ -5,9 +5,15 @@ An example use of sentiment analysis applied to the latest Tweets. Application u
  Attention layer to draw between positive and negative feeback from a given Tweet. Also, it
  can show which words were most impactful during analysis based on internal attention values.
 
-## How to run the UI?
+## How to run web-app?
 
-**UNDER CONSTRUCTION**
+```bash
+$ cd ./web-app
+$ npm install
+$ npm run dev
+```
+
+Need more info about web-app project? Check out [general project info](/web-app/README.md).
 
 ## How to train the model?
 
