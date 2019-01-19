@@ -10,7 +10,7 @@ An example use of sentiment analysis applied to the latest Tweets. Application u
 ```bash
 $ cd ./web-app
 $ npm install
-$ npm run dev
+$ npm start
 ```
 
 Need more info about web-app project? Check out [general project info](/web-app/README.md).
