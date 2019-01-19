@@ -43,6 +43,8 @@ $ ls ./api/model_data/
 -rw-r--r--  1 owner  owner    13M Jan 18 00:10 weights.h5
 ```
 
+**NOTE:** This repository already contains pretrained model weights and tokenizer, so feel free to use it!
+
 To run the API, use below series of commands:
 
 ```bash
@@ -57,6 +59,8 @@ $ . venv/bin/activate
 (venv) $ export NLTK_DATA=./nltk/
 (venv) $ python main.py
 ```
+
+Open your browser and visit Swagger page under [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 ## Example API calls
 
