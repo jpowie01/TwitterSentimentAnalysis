@@ -6,6 +6,7 @@ from werkzeug.exceptions import BadRequest
 
 import twitter
 from rest import api, serializers
+from sentiment_analysis import analyse_sentiment
 
 COUNTRY_TO_WOEID = {
     'UK': 23424975,
@@ -37,4 +38,17 @@ class Tweets(Resource):
         query = '"' + args.query + '"'
         query = urllib.parse.quote(query)
         tweets = tweepy.Cursor(twitter.api.search, q=query, lang='en', tweet_mode='extended').items(args.size)
-        return list(tweets)
+        output = []
+        for tweet in tweets:
+            if 'retweeted_status' in dir(tweet):
+                tweet_text = tweet.retweeted_status.full_text
+            else:
+                tweet_text = tweet.full_text
+
+            sentiment, attention = analyse_sentiment([tweet_text])
+            output.append({
+                'text': tweet_text,
+                'sentiment': sentiment[0].name,
+                'attention': attention[0],
+            })
+        return output

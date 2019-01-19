@@ -10,8 +10,9 @@ trending_model = api.model('Trending Model', {
 })
 
 tweet_model = api.model('Tweet Model', {
-    'text': fields.String(attribute='full_text'),
-    'sentiment': fields.Integer,
+    'text': fields.String,
+    'sentiment': fields.String,
+    'attention': fields.List(fields.Float),
 })
 
 tweets_query_parser = reqparse.RequestParser()
