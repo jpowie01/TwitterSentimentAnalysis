@@ -1,7 +1,9 @@
 Twitter Sentiment Analysis
 ==========================
 
-An example use of sentiment analysis applied to the latest Tweets for given query.
+An example use of sentiment analysis applied to the latest Tweets. Application uses LSTM with
+ Attention layer to draw between positive and negative feeback from a given Tweet. Also, it
+ can show which words were most impactful during analysis based on internal attention values.
 
 ## How to run the UI?
 
@@ -87,29 +89,81 @@ Here you can find some example endpoints that we've prepared:
 
 #### Get Tweets with sentiment analysis
 
-`GET` -> `http://127.0.0.1:5000/tweets?query=hate&size=100`
+`GET` -> `http://127.0.0.1:5000/tweets?query=uber&size=3`
 
 ```json
 [
   {
-    "text": "I HATE bullies.",
-    "sentiment": null
+    "text": "Uber/Lyft drivers be rappin like shit",
+    "sentiment": "NEGATIVE",
+    "attention": [
+      -0.009645622223615646,
+      0.00724678672850132,
+      0,
+      0.07018525898456573,
+      0.017534570768475533,
+      0.008581627160310745
+    ]
   },
   {
-    "text": "i hate the pain i feel in my heart..",
-    "sentiment": null
+    "text": "Scariest story in 1 sentence:\n\"Why don't you come sit up front?\" smiled the Uber driver.",
+    "sentiment": "POSITIVE",
+    "attention": [
+      -0.08198671787977219,
+      0.03467215970158577,
+      0,
+      0.07736007124185562,
+      -0.07715171575546265,
+      -0.048132121562957764,
+      0,
+      0.0553499199450016,
+      0.02649160847067833,
+      0,
+      -0.0034008703660219908,
+      0.0691278949379921,
+      0,
+      -0.02065562643110752,
+      0.03373348340392113
+    ]
   },
   {
-    "text": "I reall hate the fact that R Kelly make some amazing ass music 🤦🏾‍♂️🤦🏾‍♂️🤦🏾‍♂️",
-    "sentiment": null
-  },
-  {
-    "text": "RT @pinkypromiseme_: I don't understand where all the hate for the #GilletteAd is coming from? It's just saying don't be an asshole and tre…",
-    "sentiment": null
-  },
-  {
-    "text": "RT @Y2SHAF: i hate it when i’m walking on the treadmill and the person next to me starts running like calm down madam",
-    "sentiment": null
+    "text": "I fell asleep while this Uber driver was talking to me for what I thought was the rest of the fucking trip but when I woke up he was still talking , I’m tight.",
+    "sentiment": "NEGATIVE",
+    "attention": [
+      0,
+      -0.04436713457107544,
+      -0.009265453554689884,
+      0,
+      0,
+      -0.1607808917760849,
+      0.07840242981910706,
+      0,
+      0.1551399677991867,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.019089631736278534,
+      0,
+      0,
+      0.04676656424999237,
+      0,
+      0,
+      -0.19999167323112488,
+      0.009048397652804852,
+      0,
+      0,
+      0,
+      -0.0031136013567447662,
+      0,
+      0,
+      0,
+      0.015796182677149773,
+      0.11989317834377289,
+      0.06898099929094315,
+      -0.13893665373325348
+    ]
   }
 ]
 ```
