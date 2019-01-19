@@ -8,8 +8,6 @@ import tensorflow as tf
 from keras import models, layers, optimizers, regularizers, callbacks, backend as K
 from sklearn.model_selection import train_test_split
 
-from attention import AttentionLayer
-
 # Choose between GPU and CPU implementation for LSTM
 GPU_AVAILABLE = bool(K.tensorflow_backend._get_available_gpus())
 
@@ -31,8 +29,8 @@ LSTM_OUTPUT = 256
 
 # ...and training
 LEARNING_RATE = 0.001
-BATCH_SIZE = 100
-EPOCHS = 20
+BATCH_SIZE = 1024
+EPOCHS = 50
 
 # Prepare optimizer
 adam = optimizers.Adam(lr=LEARNING_RATE, beta_1=0.9, beta_2=0.999)
@@ -56,7 +54,7 @@ print(model.summary())
 
 # Split our dataset into training, validation and testing
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
-X_validate, X_test, Y_validate, Y_test = train_test_split(X_test, Y_test, test_size=0.8, random_state=13)
+X_validate, X_test, Y_validate, Y_test = train_test_split(X_test, Y_test, test_size=0.5, random_state=13)
 print('Training dataset:', X_train.shape, 'x', Y_train.shape)
 print('Validation dataset:', X_validate.shape, 'x', Y_validate.shape)
 print('Testing dataset', X_test.shape, 'x', Y_test.shape)
@@ -69,5 +67,5 @@ model.fit(X_train, Y_train, validation_data=(X_validate, Y_validate),
           epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=1, callbacks=[model_checkpoint])
 
 # Check for quality of the model on test data
-loss, accuracy = model.evaluate(X_test, Y_test, batch_size=BATCH_SIZE, verbose=1))
+loss, accuracy = model.evaluate(X_test, Y_test, batch_size=BATCH_SIZE, verbose=1)
 print('Loss:', loss, 'Accuracy:', accuracy)

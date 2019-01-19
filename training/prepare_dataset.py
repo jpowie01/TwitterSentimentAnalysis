@@ -1,5 +1,6 @@
 import pickle
 
+import swifter
 import numpy as np
 import pandas as pd
 
@@ -23,7 +24,7 @@ dataset = dataset[dataset['Sentiment'] != 2]
 dataset['Sentiment'] = dataset['Sentiment'] / 4
 
 # Apply stemmer on all Tweets
-dataset['text'] = dataset['Text'].apply(clean_text)
+dataset['text'] = dataset['Text'].swifter.apply(clean_text)
 
 # Tokenize all Tweets, so that it'll be easier to understand them
 MAX_FEATURES = 5000

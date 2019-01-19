@@ -15,7 +15,7 @@ To train your model, please follow below commands:
 $ cd ./training
 $ virtualenv -p python3.6 venv
 $ . venv/bin/activate
-(venv) $ pip install pandas keras tensorflow sklearn nltk
+(venv) $ pip install pandas keras tensorflow sklearn nltk swifter
 (venv) $ cd ./dataset && wget http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
 (venv) $ unzip trainingandtestdata.zip
 (venv) $ cd ..
