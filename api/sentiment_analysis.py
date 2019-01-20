@@ -10,6 +10,38 @@ from scipy.ndimage.filters import gaussian_filter
 from utils import clean_text
 
 
+# NOTE: This will be remove in the next PR as new models are trained without F1 Measure
+def f1_measure(y_true, y_pred):
+    def recall(y_true, y_pred):
+        """Recall metric.
+
+        Only computes a batch-wise average of recall.
+
+        Computes the recall, a metric for multi-label classification of
+        how many relevant items are selected.
+        """
+        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+        possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+        recall = true_positives / (possible_positives + K.epsilon())
+        return recall
+
+    def precision(y_true, y_pred):
+        """Precision metric.
+
+        Only computes a batch-wise average of precision.
+
+        Computes the precision, a metric for multi-label classification of
+        how many selected items are relevant.
+        """
+        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+        predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+        precision = true_positives / (predicted_positives + K.epsilon())
+        return precision
+    precision = precision(y_true, y_pred)
+    recall = recall(y_true, y_pred)
+    return 2*((precision*recall)/(precision+recall+K.epsilon()))
+
+
 class Sentiment(enum.IntEnum):
     NEGATIVE = 0
     POSITIVE = 1
@@ -18,7 +50,7 @@ class Sentiment(enum.IntEnum):
 PATH_TO_WEIGHTS = './model_data/weights.h5'
 PATH_TO_TOKENIZER = './model_data/tokenizer.pickle'
 
-NEUTRAL_TRESHOLD = 0.7
+NEUTRAL_TRESHOLD = 0.6
 LONGEST_SEQUENCE = 118
 MAX_FEATURES = 5000
 EMBEDDING_DIMENTION = 128
@@ -71,7 +103,7 @@ def get_sentiment_model():
     global sentiment_model
     if sentiment_model is not None:
         return sentiment_model
-    sentiment_model = load_model(PATH_TO_WEIGHTS)
+    sentiment_model = load_model(PATH_TO_WEIGHTS, custom_objects={'f1_measure': f1_measure})
     return sentiment_model
 
 
