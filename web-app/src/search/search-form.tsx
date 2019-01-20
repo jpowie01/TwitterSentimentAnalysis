@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
+import { Sentiments, TweetCard } from 'src/tweet/tweet-card';
 import './search-form.css';
 
 export class SearchForm extends React.Component {
-    public state: { value: string };
+    public state: { value: string, tweets: any[] };
 
     constructor(props: {}, context: any) {
         super(props, context);
@@ -11,8 +12,16 @@ export class SearchForm extends React.Component {
         this.onChange = this.onChange.bind(this);
 
         this.state = {
+            tweets: [],
             value: ''
         }
+
+        const tweet = new TweetCard({ text: "I like trains", sentiment: Sentiments.POSITIVE }, context).render();
+        this.state.tweets.push(tweet);
+        this.state.tweets.push(tweet);
+        this.state.tweets.push(tweet);
+        this.state.tweets.push(tweet);
+        this.state.tweets.push(tweet);
     }
 
     public render() {
@@ -26,6 +35,9 @@ export class SearchForm extends React.Component {
                         onChange={this.onChange}
                         onBlur={this.onBlur} />
                 </form>
+                <div className='SearchForm-cards'>
+                    {this.state.tweets}
+                </div>
             </div>
         );
     }
