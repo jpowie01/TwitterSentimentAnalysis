@@ -3,7 +3,7 @@ import { FormControl } from 'react-bootstrap';
 import { Sentiments, TweetCard } from 'src/tweet/tweet-card';
 import './search-form.css';
 
-export class SearchForm extends React.Component {
+export class SearchForm extends React.Component<any, any> {
     public state: { value: string, tweets: any[] };
 
     constructor(props: {}, context: any) {
@@ -16,12 +16,14 @@ export class SearchForm extends React.Component {
             value: ''
         }
 
-        const tweet = new TweetCard({ text: "I like trains", sentiment: Sentiments.POSITIVE }, context).render();
-        this.state.tweets.push(tweet);
-        this.state.tweets.push(tweet);
-        this.state.tweets.push(tweet);
-        this.state.tweets.push(tweet);
-        this.state.tweets.push(tweet);
+        const tweetPositive = new TweetCard({ text: "I like trains", attentions: [0.12, 0.60, 0.2], sentiment: Sentiments.POSITIVE }, context).render();
+        const tweetNeutral = new TweetCard({ text: "Trains", attentions: [0.01], sentiment: Sentiments.NEUTRAL }, context).render();
+        const tweetNegative = new TweetCard({ text: "I hate trains", attentions: [0.12, 0.60, 0.2], sentiment: Sentiments.NEGATIVE }, context).render();
+        this.state.tweets.push(tweetPositive);
+        this.state.tweets.push(tweetNeutral);
+        this.state.tweets.push(tweetPositive);
+        this.state.tweets.push(tweetNegative);
+        this.state.tweets.push(tweetNegative);
     }
 
     public render() {
