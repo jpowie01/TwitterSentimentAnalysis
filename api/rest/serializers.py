@@ -13,6 +13,10 @@ tweet_model = api.model('Tweet Model', {
     'text': fields.String,
     'sentiment': fields.String,
     'attention': fields.List(fields.Float),
+    'fullname': fields.String,
+    'nickname': fields.String,
+    'created': fields.String,
+    'photo_url': fields.String,
 })
 
 tweets_query_parser = reqparse.RequestParser()

@@ -50,5 +50,9 @@ class Tweets(Resource):
                 'text': tweet_text,
                 'sentiment': sentiment[0].name,
                 'attention': attention[0],
+                'fullname': tweet.author.name,
+                'nickname': tweet.author.screen_name,
+                'created': tweet.created_at.isoformat(),
+                'photo_url': tweet.author.profile_image_url,
             })
         return output
