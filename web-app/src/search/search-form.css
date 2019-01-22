@@ -1,0 +1,20 @@
+.SearchForm {
+    text-align: center;
+    float: none;
+    margin: 0 auto;
+}
+
+.SearchForm-input {
+    width: 40%;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.SearchForm-cards {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: wrap;
+    align-content: center;
+}
