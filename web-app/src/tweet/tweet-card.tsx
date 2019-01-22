@@ -4,9 +4,9 @@ import './tweet-card.css';
 import { WordAttentionPair } from './word-attention-pair';
 
 export enum Sentiments {
-    POSITIVE = "Positive",
-    NEUTRAL = "Neutral",
-    NEGATIVE = "Negative"
+    POSITIVE = "POSITIVE",
+    NEUTRAL = "NEUTRAL",
+    NEGATIVE = "NEGATIVE"
 }
 
 export class TweetCard extends React.Component<any, any> {
