@@ -51,7 +51,7 @@ To run the API, use below series of commands:
 $ cd ./api
 $ virtualenv -p python3.6 venv
 $ . venv/bin/activate
-(venv) $ pip install tweepy flask-restplus keras tensorflow nltk
+(venv) $ pip install tweepy flask-restplus flask-cors keras tensorflow nltk
 (venv) $ export CONSUMER_KEY={YOUR_CONSUMER_KEY}
 (venv) $ export CONSUMER_SECRET={YOUT_CONSUMER_SECRET}
 (venv) $ export ACCESS_TOKEN={YOUR_ACCESS_TOKEN}
