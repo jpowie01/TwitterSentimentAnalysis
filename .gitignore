@@ -327,3 +327,6 @@ yarn-error.log*
 
 .vscode
 
+# environment file
+/web-app/.env
+
