@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Panel} from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import './tweet-card.css';
-import {WordAttentionPair} from './word-attention-pair';
+import { WordAttentionPair } from './word-attention-pair';
 
 export enum Sentiments {
     POSITIVE = "POSITIVE",
@@ -40,14 +40,16 @@ export class TweetCard extends React.Component<any, any> {
                 <Panel>
                     <Panel.Body>
                         <div className='TweetUserInfo'>
-                            <img src={this.state.photoUrl}/>
-                            <span className='UserFullName'>{this.state.fullname}</span>
-                            <span className='UserFullNick'>{'@' + this.state.nickname}</span>
-                            <span className='TweetCreated'>{this.state.created}</span>
+                            <img src={this.state.photoUrl} />
+                            <div className='TweetUsernames'>
+                                <span className='UserFullName'>{this.state.fullname}</span>
+                                <span className='UserFullNick'>{'@' + this.state.nickname}</span>
+                            </div>
                         </div>
-                        <span>
+                        <span className='TweetText'>
                             {this.state.textWithAttentions.map((pair, i) => pair.render())}
                         </span>
+                        <span className='TweetCreated'>{this.state.created}</span>
                     </Panel.Body>
                 </Panel>
             </div>

@@ -18,13 +18,6 @@ export class SearchForm extends React.Component<any, any> {
             tweets: [],
             value: ''
         };
-        
-        // const tweetPositive = new TweetCard({ text: "I like trains", attentions: [0.12, 0.60, 0.2], sentiment: Sentiments.POSITIVE }, context).render();
-        // const tweetNeutral = new TweetCard({ text: "Trains", attentions: [0.01], sentiment: Sentiments.NEUTRAL }, context).render();
-        // const tweetNegative = new TweetCard({ text: "I hate trains", attentions: [0.12, 0.60, 0.2], sentiment: Sentiments.NEGATIVE }, context).render();
-        // this.state.tweets.push(tweetPositive);
-        // this.state.tweets.push(tweetNeutral);
-        // this.state.tweets.push(tweetNegative);
     }
 
     public render() {
