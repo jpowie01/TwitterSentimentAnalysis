@@ -3,3 +3,43 @@
     margin: 15px;
     flex: 0 40%;
 }
+
+.TweetUserInfo {
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+}
+
+.UserFullName {
+    font-weight: bold;
+}
+
+.UserFullNick {
+    display: flex;
+}
+
+.TweetUsernames {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.TweetCreated {
+    display: flex;
+    float: right;
+    margin-top: 20px;
+}
+
+.TweetText {
+    overflow: auto;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.TweetPredictedSentiment {
+    display: flex;
+    float: right;
+    margin-top: 5px;
+    font-weight: bold;
+}
