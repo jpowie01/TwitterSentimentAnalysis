@@ -36,3 +36,10 @@
     word-break: break-all;
     word-wrap: break-word;
 }
+
+.TweetPredictedSentiment {
+    display: flex;
+    float: right;
+    margin-top: 5px;
+    font-weight: bold;
+}

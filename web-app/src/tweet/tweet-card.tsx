@@ -39,6 +39,7 @@ export class TweetCard extends React.Component<any, any> {
             <div className='TweetCard'>
                 <Panel>
                     <Panel.Body>
+                        <span className='TweetPredictedSentiment'>{this.state.textSentiment}</span>
                         <div className='TweetUserInfo'>
                             <img src={this.state.photoUrl} />
                             <div className='TweetUsernames'>

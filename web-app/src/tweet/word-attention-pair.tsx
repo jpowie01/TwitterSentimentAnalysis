@@ -5,13 +5,13 @@ import {Sentiments} from "./tweet-card";
 function GetColour(sentiment: Sentiments) {
     switch (sentiment) {
         case Sentiments.POSITIVE:
-            return '0,255,0';
+            return '97,216,0';
         case Sentiments.NEUTRAL:
-            return '0,0,255';
+            return '33,150,243';
         case Sentiments.NEGATIVE:
-            return '255,0,0';
+            return '211,47,47';
         default:
-            return '255,255,0'
+            return '255,255,255'
     }
 }
 

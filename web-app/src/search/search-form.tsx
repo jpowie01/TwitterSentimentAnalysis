@@ -46,7 +46,7 @@ export class SearchForm extends React.Component<any, any> {
     }
 
     private async onBlur(): Promise<void> {
-        const newTweets = await this.getTweetsFromApi(this.state.value, 10);
+        const newTweets = await this.getTweetsFromApi(this.state.value, 50);
         this.setState({
             tweets: newTweets
         })
