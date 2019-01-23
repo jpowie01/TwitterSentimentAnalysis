@@ -1,4 +1,5 @@
 .SearchForm {
+    width: 80%;
     text-align: center;
     float: none;
     margin: 0 auto;
@@ -6,15 +7,26 @@
 
 .SearchForm-input {
     width: 40%;
-    display: inline-block;
     margin-bottom: 20px;
+    margin-left: 30%;
 }
 
 .SearchForm-cards {
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex-flow: wrap;
-    align-content: center;
+    align-content: left;
+    float: left;
+}
+
+.SearchForm-summary {
+    width: 80%;
+    margin-left: 10%;
+    display: flex;
+}
+
+.SearchForm-summary-text {
+    display: flex;
 }
