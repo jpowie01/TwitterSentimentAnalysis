@@ -3,3 +3,17 @@
     margin: 15px;
     flex: 0 40%;
 }
+
+.TweetUserInfo {
+    display: flex;
+    margin: 10px;
+}
+
+.UserFullName {
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.TweetCreated {
+    flex-direction: column;
+}
