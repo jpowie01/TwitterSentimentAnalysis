@@ -22,11 +22,12 @@
 }
 
 .SearchForm-summary {
-    width: 80%;
-    margin-left: 10%;
     display: flex;
+    justify-content: center;
 }
 
-.SearchForm-summary-text {
-    display: flex;
+.SearchForm-summary-chart {
+    width: 20%;
+    margin-right: 12%;
+    margin-left: 10%;
 }

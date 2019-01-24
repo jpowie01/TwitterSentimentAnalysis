@@ -3,6 +3,22 @@ import { ColourUtil } from 'src/utils/ColourUtil';
 import { Sentiments } from "./tweet-card";
 
 export class WordAttentionPair extends React.Component<any, any> {
+
+    public static prepareWordAttentionPairs(sentiment: Sentiments, text: string, attentions: number[], context: any): WordAttentionPair[] {
+        const words: string[] = text.split(" ");
+        const wordAttentionPairs: WordAttentionPair[] = [];
+
+        words.forEach((value: string, index: number, array: string[]) => {
+            wordAttentionPairs.push(new WordAttentionPair({
+                attention: attentions[index],
+                sentiment,
+                word: value,
+            }, context));
+        });
+
+        return wordAttentionPairs;
+    }
+    
     public state: { sentiment: Sentiments, word: string, attention: number };
 
     constructor(props: { sentiment: Sentiments, word: string, attention: number }, context: any) {

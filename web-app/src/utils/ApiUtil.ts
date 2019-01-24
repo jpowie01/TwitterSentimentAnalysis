@@ -1,4 +1,5 @@
 export enum API_URL {
     TWEETS = '/tweets',
-    TRENDING = '/trending'
+    TRENDING = '/trending',
+    ANALYSE = '/custom_tweet'
 }

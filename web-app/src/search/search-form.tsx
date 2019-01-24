@@ -3,6 +3,7 @@ import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 import PieChart from 'react-minimal-pie-chart';
+import { InputCard } from 'src/input-card/input-card';
 import { Sentiments, TweetCard } from 'src/tweet/tweet-card';
 import { API_URL } from 'src/utils/ApiUtil';
 import { AppColorPalette } from 'src/utils/ColourUtil';
@@ -19,7 +20,7 @@ export class SearchForm extends React.Component<any, any> {
 
         this.state = {
             loading: false,
-            summary: [],
+            summary: {},
             tweets: [],
             value: '',
         };
@@ -41,19 +42,13 @@ export class SearchForm extends React.Component<any, any> {
                         ? <Loader type="ThreeDots" color={AppColorPalette.APP_BLUE} height={80} width={80} />
                         : <div>
                             <div className='SearchForm-summary'>
-                                <PieChart className='SearchForm-summary-chart' data={[
-                                    { title: Sentiments.POSITIVE, value: this.state.summary[Sentiments.POSITIVE], color: AppColorPalette.SENTIMENT_GREEN },
-                                    { title: Sentiments.NEUTRAL, value: this.state.summary[Sentiments.NEUTRAL], color: AppColorPalette.SENTIMENT_BLUE },
-                                    { title: Sentiments.NEGATIVE, value: this.state.summary[Sentiments.NEGATIVE], color: AppColorPalette.SENTIMENT_RED },
-                                ]}
-                                />
-                                <div className='SearchForm-summary-text'>
-                                    1. Lorem ipsum Lorem ipsum Lorem ipsum
-                                    1. Lorem ipsum Lorem ipsum Lorem ipsum
-                                    1. Lorem ipsum Lorem ipsum Lorem ipsum
-                                    1. Lorem ipsum Lorem ipsum Lorem ipsum
-                                    1. Lorem ipsum Lorem ipsum Lorem ipsum
-                                </div>
+                                {this.state.summary[Sentiments.POSITIVE] !== undefined
+                                    ? <PieChart className='SearchForm-summary-chart' data={[
+                                        { title: Sentiments.POSITIVE, value: this.state.summary[Sentiments.POSITIVE], color: AppColorPalette.SENTIMENT_GREEN },
+                                        { title: Sentiments.NEUTRAL, value: this.state.summary[Sentiments.NEUTRAL], color: AppColorPalette.SENTIMENT_BLUE },
+                                        { title: Sentiments.NEGATIVE, value: this.state.summary[Sentiments.NEGATIVE], color: AppColorPalette.SENTIMENT_RED }]} />
+                                    : null}
+                                <InputCard />
                             </div>
                             <div className='SearchForm-cards'>
                                 {this.state.tweets}
