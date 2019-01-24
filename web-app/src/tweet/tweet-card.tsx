@@ -6,7 +6,8 @@ import { WordAttentionPair } from './word-attention-pair';
 export enum Sentiments {
     POSITIVE = "POSITIVE",
     NEUTRAL = "NEUTRAL",
-    NEGATIVE = "NEGATIVE"
+    NEGATIVE = "NEGATIVE",
+    NONE = "NONE"
 }
 
 export class TweetCard extends React.Component<any, any> {
@@ -21,7 +22,7 @@ export class TweetCard extends React.Component<any, any> {
     }, context: any) {
         super(props, context);
 
-        const preparedText: WordAttentionPair[] = this.prepareWordAttentionPairs(props.sentiment, props.text, props.attentions);
+        const preparedText: WordAttentionPair[] = WordAttentionPair.prepareWordAttentionPairs(props.sentiment, props.text, props.attentions, this.context);
 
         this.state = {
             created: props.created,
@@ -34,7 +35,6 @@ export class TweetCard extends React.Component<any, any> {
     }
 
     public render() {
-
         return (
             <div className='TweetCard'>
                 <Panel>
@@ -55,20 +55,5 @@ export class TweetCard extends React.Component<any, any> {
                 </Panel>
             </div>
         );
-    }
-
-    private prepareWordAttentionPairs(sentiment: Sentiments, text: string, attentions: number[]): WordAttentionPair[] {
-        const words: string[] = text.split(" ");
-        const wordAttentionPairs: WordAttentionPair[] = [];
-
-        words.forEach((value: string, index: number, array: string[]) => {
-            wordAttentionPairs.push(new WordAttentionPair({
-                attention: attentions[index],
-                sentiment,
-                word: value,
-            }, this.context));
-        });
-
-        return wordAttentionPairs;
     }
 }

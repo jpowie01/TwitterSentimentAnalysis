@@ -1,12 +1,16 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
-import { TweetCard } from 'src/tweet/tweet-card';
+import Loader from 'react-loader-spinner';
+import PieChart from 'react-minimal-pie-chart';
+import { InputCard } from 'src/input-card/input-card';
+import { Sentiments, TweetCard } from 'src/tweet/tweet-card';
 import { API_URL } from 'src/utils/ApiUtil';
+import { AppColorPalette } from 'src/utils/ColourUtil';
 import './search-form.css';
 
 export class SearchForm extends React.Component<any, any> {
-    public state: { value: string, tweets: any[] };
+    public state: { value: string, tweets: any[], summary: any, loading: boolean };
 
     constructor(props: {}, context: any) {
         super(props, context);
@@ -15,8 +19,10 @@ export class SearchForm extends React.Component<any, any> {
         this.onBlur = this.onBlur.bind(this);
 
         this.state = {
+            loading: false,
+            summary: {},
             tweets: [],
-            value: ''
+            value: '',
         };
     }
 
@@ -31,9 +37,24 @@ export class SearchForm extends React.Component<any, any> {
                         onChange={this.onChange}
                         onBlur={this.onBlur} />
                 </form>
-                <div className='SearchForm-cards'>
-                    {this.state.tweets}
-                </div>
+                {
+                    this.state.loading
+                        ? <Loader type="ThreeDots" color={AppColorPalette.APP_BLUE} height={80} width={80} />
+                        : <div>
+                            <div className='SearchForm-summary'>
+                                {this.state.summary[Sentiments.POSITIVE] !== undefined
+                                    ? <PieChart className='SearchForm-summary-chart' data={[
+                                        { title: Sentiments.POSITIVE, value: this.state.summary[Sentiments.POSITIVE], color: AppColorPalette.SENTIMENT_GREEN },
+                                        { title: Sentiments.NEUTRAL, value: this.state.summary[Sentiments.NEUTRAL], color: AppColorPalette.SENTIMENT_BLUE },
+                                        { title: Sentiments.NEGATIVE, value: this.state.summary[Sentiments.NEGATIVE], color: AppColorPalette.SENTIMENT_RED }]} />
+                                    : null}
+                                <InputCard />
+                            </div>
+                            <div className='SearchForm-cards'>
+                                {this.state.tweets}
+                            </div>
+                        </div>
+                }
             </div>
         );
     }
@@ -46,21 +67,30 @@ export class SearchForm extends React.Component<any, any> {
     }
 
     private async onBlur(): Promise<void> {
-        const newTweets = await this.getTweetsFromApi(this.state.value, 50);
+        const apiResponse: { newSummary: any, newTweets: any[] } = await this.getTweetsFromApi(this.state.value, 50);
         this.setState({
-            tweets: newTweets
-        })
+            loading: false,
+            summary: apiResponse.newSummary,
+            tweets: apiResponse.newTweets,
+        });
     }
 
-    private async getTweetsFromApi(query: string, size: number): Promise<any[]> {
+    private async getTweetsFromApi(query: string, size: number): Promise<{ newSummary: any, newTweets: any[] }> {
 
         const config: AxiosRequestConfig = this.getSearchConfigParams(query, size);
 
         const TWEETS_API_URL = process.env.REACT_APP_REST_API_LOCATION + API_URL.TWEETS;
 
         this.setState({
+            loading: true,
+            summary: {},
             tweets: []
         });
+
+        const summary = {};
+        summary[Sentiments.POSITIVE] = 0;
+        summary[Sentiments.NEUTRAL] = 0;
+        summary[Sentiments.NEGATIVE] = 0;
 
         const tweets: any[] = [];
 
@@ -79,14 +109,19 @@ export class SearchForm extends React.Component<any, any> {
                         text: tweet.text,
                     };
 
+                    summary[tweet.sentiment]++;
+
                     tweets.push(new TweetCard(body, this.context).render());
                 });
             })
             .catch((error: any) => {
-                alert(error.toString);
+                alert(error);
             });
 
-        return tweets;
+        return {
+            newSummary: summary,
+            newTweets: tweets
+        };
     }
 
     private getSearchConfigParams(query: string, size: number): AxiosRequestConfig {
