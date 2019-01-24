@@ -2,7 +2,7 @@ import enum
 import pickle
 
 import numpy as np
-from keras import layers, models, backend as K
+from keras import layers, models
 from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from scipy.ndimage.filters import gaussian_filter
@@ -14,6 +14,7 @@ class Sentiment(enum.IntEnum):
     NEGATIVE = 0
     POSITIVE = 1
     NEUTRAL = 2
+
 
 PATH_TO_WEIGHTS = './model_data/weights.h5'
 PATH_TO_TOKENIZER = './model_data/tokenizer.pickle'
@@ -55,7 +56,7 @@ def convert_attentions(texts, attentions):
         j = 1
         for i, word in enumerate(reversed(clean_text_with_all_words), 1):
             if clean_text_with_all_words[-i] == clean_text_without_stopwords[-j]:
-                converted_attention.append(attention[-i,0])
+                converted_attention.append(attention[-i, 0])
                 j = min(j + 1, len(clean_text_without_stopwords))
             else:
                 converted_attention.append(0.0)
@@ -114,4 +115,3 @@ def analyse_sentiment(texts):
     sentiments = sentiment_model.predict(padded_sequences)
     attentions = attention_model.predict(padded_sequences)
     return convert_sentiments(sentiments), convert_attentions(texts, attentions)
-
