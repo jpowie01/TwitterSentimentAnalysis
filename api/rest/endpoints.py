@@ -56,3 +56,20 @@ class Tweets(Resource):
                 'photo_url': tweet.author.profile_image_url,
             })
         return output
+
+
+@api.route('/custom_tweet')
+class CustomTweet(Resource):
+
+    @api.expect(serializers.custom_tweet_query_parser)
+    @api.marshal_with(serializers.custom_tweet_model)
+    def get(self):
+        args = serializers.custom_tweet_query_parser.parse_args()
+        tweet_text = args.content
+        sentiment, attention = analyse_sentiment([tweet_text])
+        output = [{
+            'text': tweet_text,
+            'sentiment': sentiment[0].name,
+            'attention': attention[0],
+        }]
+        return output

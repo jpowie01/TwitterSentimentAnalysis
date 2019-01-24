@@ -5,12 +5,12 @@ import nltk
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 
-
 nltk.download('punkt', download_dir='./nltk/')
 nltk.download('stopwords', download_dir='./nltk/')
 
-
 stemmer = PorterStemmer()
+
+
 def clean_text(text, remove_words=True):
     text = text.lower().replace('rt', '')
     text = "".join([ch for ch in text if ch not in string.punctuation])
