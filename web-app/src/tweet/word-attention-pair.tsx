@@ -1,19 +1,6 @@
 import * as React from 'react';
-import {Sentiments} from "./tweet-card";
-
-
-function GetColour(sentiment: Sentiments) {
-    switch (sentiment) {
-        case Sentiments.POSITIVE:
-            return '97,216,0';
-        case Sentiments.NEUTRAL:
-            return '33,150,243';
-        case Sentiments.NEGATIVE:
-            return '211,47,47';
-        default:
-            return '255,255,255'
-    }
-}
+import { ColourUtil } from 'src/utils/ColourUtil';
+import { Sentiments } from "./tweet-card";
 
 export class WordAttentionPair extends React.Component<any, any> {
     public state: { sentiment: Sentiments, word: string, attention: number };
@@ -25,8 +12,9 @@ export class WordAttentionPair extends React.Component<any, any> {
     }
 
     public render() {
+        const wordBackground: string = ColourUtil.getColourForSentimentAndAttention(this.state.sentiment, this.state.attention);
         const textStyle = {
-            backgroundColor: 'rgba(' + GetColour(this.state.sentiment) + ',' + this.state.attention + ')',
+            backgroundColor: wordBackground,
             display: 'inline-block'
         };
         const spanStyle = {
