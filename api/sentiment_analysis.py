@@ -1,5 +1,6 @@
 import enum
 import pickle
+import string
 
 import numpy as np
 from keras import layers, models
@@ -25,7 +26,7 @@ MAX_FEATURES = 5000
 EMBEDDING_DIMENTION = 128
 LSTM_OUTPUT = 256
 
-ATTENTION_SCALE = 3
+ATTENTION_SCALE = 8
 
 sentiment_model = None
 attention_model = None
@@ -44,32 +45,16 @@ def convert_sentiments(sentiments):
 def convert_attentions(texts, attentions):
     output = []
     for text, attention in zip(texts, attentions):
-        converted_attention = []
-
-        # We need two versions of our text:
-        #  - without stopwords, which was passed to the neural network
-        #  - with all the words, which we will be comparing to in order to map attention to original text
-        clean_text_without_stopwords = clean_text(text).split(' ')
-        clean_text_with_all_words = clean_text(text, remove_words=False).split(' ')
-
-        # Iterate from the back and match each words. If equal - we found attention value for given original word
-        j = 1
-        for i, word in enumerate(reversed(clean_text_with_all_words), 1):
-            if clean_text_with_all_words[-i] == clean_text_without_stopwords[-j]:
-                converted_attention.append(attention[-i, 0])
-                j = min(j + 1, len(clean_text_without_stopwords))
-            else:
-                converted_attention.append(0.0)
-
-        # Fill all the zeros with values from Gaussian filter
-        converted_attention = np.array(converted_attention)
-        smoothed_attention = gaussian_filter(converted_attention, 1.0)
-        converted_attention[converted_attention == 0] = smoothed_attention[converted_attention == 0]
-
-        # Normalize it
-        normalized_attention = converted_attention / np.sum(converted_attention)
-        normalized_attention *= ATTENTION_SCALE
+        number_of_words = len(text.split(' '))
+        print(attention[:,0])
+        attention = np.array(attention[-number_of_words:, 0])
+        print(attention)
+        #normalized_attention = attention / np.sum(attention)
+        #print(normalized_attention)
+        normalized_attention = attention * ATTENTION_SCALE
+        print(normalized_attention)
         normalized_attention = np.clip(normalized_attention, 0, 1)
+        print(normalized_attention)
 
         output.append(list(reversed(normalized_attention.tolist())))
     return output
@@ -109,9 +94,27 @@ def analyse_sentiment(texts):
     sentiment_model = get_sentiment_model()
     attention_model = get_attention_model()
 
-    clean_texts = [clean_text(text) for text in texts]
+    texts_without_punctations = []
+    for text in texts:
+        output = ''
+        for word in text.split(' '):
+            # Replace all standalone emojis with UNK token
+            if all(character > '\uFFFF' for character in word):
+                output += 'unk '
+            # Replace all standalone punctations with UNK token
+            elif all(character in string.punctuation for character in word):
+                output += 'unk '
+            # Otherwise, pass it to the network
+            else:
+                output += word + ' '
+
+        # Make sure not to leave empty space at the end
+        output = output[:-1] if output[-1] == ' ' else output
+        texts_without_punctations.append(output)
+
+    clean_texts = [clean_text(text) for text in texts_without_punctations]
     sequences = tokenizer.texts_to_sequences(clean_texts)
     padded_sequences = pad_sequences(sequences, maxlen=LONGEST_SEQUENCE)
     sentiments = sentiment_model.predict(padded_sequences)
     attentions = attention_model.predict(padded_sequences)
-    return convert_sentiments(sentiments), convert_attentions(texts, attentions)
+    return convert_sentiments(sentiments), convert_attentions(texts_without_punctations, attentions)
