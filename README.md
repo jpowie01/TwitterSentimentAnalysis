@@ -21,7 +21,7 @@ An example use of sentiment analysis applied to the latest Tweets. Application u
 
 #### Custom Tweet analysis
 
-<img src="assets/custom_after.png" width="450">
+<img src="assets/custom.png" width="450">
 
 ## How to run web-app?
 
