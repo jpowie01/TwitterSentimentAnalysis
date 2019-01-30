@@ -5,6 +5,24 @@ An example use of sentiment analysis applied to the latest Tweets. Application u
  Attention layer to draw between positive and negative feeback from a given Tweet. Also, it
  can show which words were most impactful during analysis based on internal attention values.
 
+## Screenshots
+
+#### Example search results for "hate"
+
+![Hate Results](assets/hate.png)
+
+#### Example search results for "love"
+
+![Love Results](assets/love.png)
+
+#### Tweets sentiment coloring
+
+<img src="assets/example.png" width="450">
+
+#### Custom Tweet analysis
+
+<img src="assets/custom.png" width="450">
+
 ## How to run web-app?
 
 ```bash
@@ -107,9 +125,9 @@ Here you can find some example endpoints that we've prepared:
     "text": "i hate people",
     "sentiment": "NEGATIVE",
     "attention": [
-      0.2035791277885437,
-      1,
-      1
+      0.06718742102384567,
+      0.4514390826225281,
+      0.4514661729335785
     ],
     "fullname": "jen",
     "nickname": "iamabandito",
@@ -120,43 +138,43 @@ Here you can find some example endpoints that we've prepared:
     "text": "I hate that being a “morning person” is seen as being the most productive. I work better at night, I work better when I’ve slept in, I enjoy leisure mornings. I am not a morning person period.",
     "sentiment": "NEUTRAL",
     "attention": [
-      0.018304800614714622,
-      0.1260768324136734,
-      0.08547406643629074,
-      0.018965071067214012,
-      0.019448567181825638,
-      0.11604408919811249,
-      0.07898149639368057,
-      0.025163527578115463,
-      0.1264631301164627,
-      0.04651867225766182,
-      0.03077707439661026,
-      0.01897846907377243,
-      0.025690194219350815,
-      0.11794410645961761,
-      0.031303856521844864,
-      0.12673059105873108,
-      0.12484921514987946,
-      0.056624606251716614,
-      0.07170872390270233,
-      0.058482199907302856,
-      0.12674853205680847,
-      0.1258183866739273,
-      0.1265796571969986,
-      0.041735485196113586,
-      0.05405481904745102,
-      0.02129172533750534,
-      0.03456570953130722,
-      0.1267087459564209,
-      0.12296092510223389,
-      0.0811547040939331,
-      0.07187405973672867,
-      0.11625345051288605,
-      0.12675505876541138,
-      0.12675221264362335,
-      0.12490260601043701,
-      0.12324085831642151,
-      0.12407350540161133
+      0.03465234488248825,
+      0.2328326255083084,
+      0.23284660279750824,
+      0.229080468416214,
+      0.20134896039962769,
+      0.1602855920791626,
+      0.1254456341266632,
+      0.1011728048324585,
+      0.11189230531454086,
+      0.16113440692424774,
+      0.09171538800001144,
+      0.08485584706068039,
+      0.0928933247923851,
+      0.1442396193742752,
+      0.21461866796016693,
+      0.23283472657203674,
+      0.11889468878507614,
+      0.17596875131130219,
+      0.17660245299339294,
+      0.19103240966796875,
+      0.23278631269931793,
+      0.04326930269598961,
+      0.15518422424793243,
+      0.2036893367767334,
+      0.04577045887708664,
+      0.05624167248606682,
+      0.07582158595323563,
+      0.2034529596567154,
+      0.06726902723312378,
+      0.23272675275802612,
+      0.14504748582839966,
+      0.19384515285491943,
+      0.17640644311904907,
+      0.1585114300251007,
+      0.23276740312576294,
+      0.041838016360998154,
+      0.06722453981637955
     ],
     "fullname": "c",
     "nickname": "cxxlvndivvxx",
@@ -165,23 +183,43 @@ Here you can find some example endpoints that we've prepared:
   },
   {
     "text": "I love your voice but I hate when you speak",
-    "sentiment": "NEGATIVE",
+    "sentiment": "POSITIVE",
     "attention": [
-      0.04843185096979141,
-      0.33358097076416016,
-      0.3353733420372009,
-      0.3245925009250641,
-      0.3353455066680908,
-      0.33492520451545715,
-      0.33537527918815613,
-      0.33537524938583374,
-      0.3348485231399536,
-      0.2821515202522278
+      0.05682794377207756,
+      0.38138285279273987,
+      0.25030916929244995,
+      0.05787074193358421,
+      0.05518733337521553,
+      0.08842664957046509,
+      0.3818563222885132,
+      0.38185766339302063,
+      0.38039451837539673,
+      0.3818225860595703
     ],
     "fullname": "𝐤𝐠 ¡𝐭𝐨𝐦𝐨𝐫𝐫𝐨𝐰!",
     "nickname": "theblcony",
     "created": "2019-01-22T20:36:30",
     "photo_url": "http://pbs.twimg.com/profile_images/1086472744513011712/u44lGkLA_normal.jpg"
+  }
+]
+```
+
+#### Get Tweets with sentiment analysis
+
+`GET` -> `http://127.0.0.1:5000/custom_tweet?content=I%20love%20trains%20and%20potatoes!`
+
+```json
+[
+  {
+    "text": "I love trains and potatoes!",
+    "sentiment": "POSITIVE",
+    "attention": [
+      0.06628784537315369,
+      0.4448699355125427,
+      0.4144006073474884,
+      0.15626297891139984,
+      0.1030135452747345
+    ]
   }
 ]
 ```
