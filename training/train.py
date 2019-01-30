@@ -25,7 +25,7 @@ Y = np.load('dataset/Y.npy')
 # Some hyperparameters for the model
 MAX_FEATURES = 5000
 EMBEDDING_DIMENTION = 128
-LSTM_OUTPUT = 256
+LSTM_OUTPUT = 128
 
 # ...and training
 LEARNING_RATE = 0.001

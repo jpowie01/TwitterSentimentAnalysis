@@ -38,18 +38,22 @@ class Tweets(Resource):
         query = '"' + args.query + '"'
         query = urllib.parse.quote(query)
         tweets = tweepy.Cursor(twitter.api.search, q=query, lang='en', tweet_mode='extended').items(args.size)
-        output = []
-        for tweet in tweets:
-            if 'retweeted_status' in dir(tweet):
-                tweet_text = tweet.retweeted_status.full_text
-            else:
-                tweet_text = tweet.full_text
 
-            sentiment, attention = analyse_sentiment([tweet_text])
+        raw_tweets = list(tweets)
+        tweet_texts = []
+        for tweet in raw_tweets:
+            if 'retweeted_status' in dir(tweet):
+                tweet_texts.append(tweet.retweeted_status.full_text)
+            else:
+                tweet_texts.append(tweet.full_text)
+
+        output = []
+        sentiments, attentions = analyse_sentiment(tweet_texts)
+        for sentiment, attention, tweet_text, tweet in zip(sentiments, attentions, tweet_texts, raw_tweets):
             output.append({
                 'text': tweet_text,
-                'sentiment': sentiment[0].name,
-                'attention': attention[0],
+                'sentiment': sentiment.name,
+                'attention': attention,
                 'fullname': tweet.author.name,
                 'nickname': tweet.author.screen_name,
                 'created': tweet.created_at.isoformat(),

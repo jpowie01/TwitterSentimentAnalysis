@@ -24,7 +24,7 @@ NEUTRAL_TRESHOLD = 0.6
 LONGEST_SEQUENCE = 118
 MAX_FEATURES = 5000
 EMBEDDING_DIMENTION = 128
-LSTM_OUTPUT = 256
+LSTM_OUTPUT = 128
 
 ATTENTION_SCALE = 8
 
@@ -46,17 +46,11 @@ def convert_attentions(texts, attentions):
     output = []
     for text, attention in zip(texts, attentions):
         number_of_words = len(text.split(' '))
-        print(attention[:,0])
         attention = np.array(attention[-number_of_words:, 0])
-        print(attention)
-        #normalized_attention = attention / np.sum(attention)
-        #print(normalized_attention)
         normalized_attention = attention * ATTENTION_SCALE
-        print(normalized_attention)
         normalized_attention = np.clip(normalized_attention, 0, 1)
-        print(normalized_attention)
 
-        output.append(list(reversed(normalized_attention.tolist())))
+        output.append(list(normalized_attention))
     return output
 
 

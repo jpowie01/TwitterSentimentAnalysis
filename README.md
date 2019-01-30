@@ -5,6 +5,26 @@ An example use of sentiment analysis applied to the latest Tweets. Application u
  Attention layer to draw between positive and negative feeback from a given Tweet. Also, it
  can show which words were most impactful during analysis based on internal attention values.
 
+## Screenshots
+
+#### Example search results for "hate"
+
+![Hate Results](assets/hate.png)
+
+#### Example search results for "love"
+
+![Love Results](assets/love.png)
+
+#### Tweets sentiment coloring
+
+![Tweets Sentiment Coloring](assets/example.png)
+
+#### Custom Tweet analysis
+
+![Custom Tweet analysis - Before](assets/custom_before.png)
+
+![Custom Tweet analysis - After](assets/custom_after.png)
+
 ## How to run web-app?
 
 ```bash
